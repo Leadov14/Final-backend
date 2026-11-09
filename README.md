@@ -96,8 +96,8 @@ usuario (1) ────< reserva >──── (1) cancha
 Necesitás **Node.js 20.19 o superior** y **MongoDB** corriendo (local, en el puerto 27017, o una URI de Atlas).
 
 ```bash
-git clone <URL-DEL-REPOSITORIO>
-cd <NOMBRE-DE-LA-CARPETA>
+git clone https://github.com/Leadov14/Final-backend
+cd Final-backend
 ```
 
 ```bash
