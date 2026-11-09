@@ -16,7 +16,7 @@ app.use(cors())
 app.use (express.json())
 
 app.get('/', (req, res) => {
-    res.send('¡Coming soon!');
+    res.send('Proyecto final de Backend. CRUD para alquiler de canchas');
 });
 
 app.use ("/api/usuarios", usuarioRoutes);
