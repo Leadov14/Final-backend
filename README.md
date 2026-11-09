@@ -119,27 +119,6 @@ Conectado a la base de datos Polideportivo correctamente.
 Servidor funcionando en http://localhost:3000
 ```
 
-
-## Variables de entorno (.env)
-
-El repositorio incluye un archivo `.env` con **valores de ejemplo**, listo para usar con una base de datos local (también está `.env.example`, con el mismo contenido):
-
-```env
-MONGO_URI = "mongodb://localhost:27017/Polideportivo"
-PORT = 3000
-JWT_SECRET = "secreto_de_ejemplo"
-JWT_EXPIRA = "2h"
-```
-
-| Variable | Descripción |
-|---|---|
-| `MONGO_URI` | cadena de conexión a MongoDB |
-| `PORT` | puerto en el que escucha el servidor (por defecto `3000`) |
-| `JWT_SECRET` | clave secreta con la que se firman los tokens |
-| `JWT_EXPIRA` | duración de los tokens (por defecto `2h`) |
-
-Fuera de un entorno de práctica habría que cambiar el valor de `JWT_SECRET`.
-
 ---
 
 ## Endpoints
