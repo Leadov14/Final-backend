@@ -11,7 +11,6 @@ Trabajo Práctico Final del curso de **Backend Developer** (Centro de e-Learning
 - [Tecnologías](#tecnologías)
 - [Esquema de la base de datos](#esquema-de-la-base-de-datos)
 - [Cómo correr el proyecto](#cómo-correr-el-proyecto)
-- [Variables de entorno (.env)](#variables-de-entorno-env)
 - [Endpoints](#endpoints)
 - [Datos de ejemplo (mock)](#datos-de-ejemplo-mock)
 - [Estructura del proyecto](#estructura-del-proyecto)
@@ -99,6 +98,10 @@ Necesitás **Node.js 20.19 o superior** y **MongoDB** corriendo (local, en el pu
 git clone https://github.com/Leadov14/Final-backend
 cd Final-backend
 ```
+
+>Colocá el archivo **.env** en la **carpeta raíz del proyecto**. El **.env** se entrego aparte, descargar del enlace de Drive que se envió.
+
+Corroboar que el archivo descargado tenga el nombre ".env"
 
 ```bash
 npm install
