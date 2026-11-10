@@ -104,8 +104,6 @@ cd Final-backend
 npm install
 ```
 
-El repositorio ya incluye el archivo `.env` con valores de ejemplo (ver la sección siguiente), así que no hace falta crearlo.
-
 ```bash
 npm start
 ```
@@ -194,6 +192,8 @@ El token sale de `POST /api/auth/login` o de `POST /api/auth/registro`, y dura e
 
 > Los `_id` de los ejemplos son ilustrativos: en tu base de datos van a ser distintos. Cuando un pedido necesite un `_id` (por ejemplo `canchaID`), pegá el `_id` real que devolvió la creación.
 
+> Para agilizar las pruebas recomiendo guardar en un archivo txt los _id de usuarios, canchas y reservas creadas.
+
 ### POST `/api/auth/registro` (primer administrador)
 
 El registro siempre crea usuarios con rol `socio`, y solo un `admin` puede crear canchas o asignar roles. Por eso el **primer admin** se crea así:
@@ -223,7 +223,7 @@ Primero iniciá sesión con Lucas: solo los administradores pueden crear, editar
 }
 ```
 
-Copiá el token que devuelve el login y pegalo en Thunder Client, en la pestaña **Auth → Bearer**. Con ese token se hacen los pedidos de canchas siguientes.
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**. Con ese token se crearan las canchas siguientes.
 
 ### POST `/api/canchas` 🔒 admin
 
@@ -260,9 +260,13 @@ Cancha de tenis:
 }
 ```
 
+### GET `/api/canchas` 
+
+Devuelve un listado de todas las canchas.
+
 ### PATCH `/api/canchas/:id` 🔒 admin
 
-Sin sacar el token de Lucas, se modifica la cancha de tenis (en la URL va el `_id` de esa cancha):
+Sin sacar el token de Lucas, **se modifica la cancha de tenis - (en la URL va el `_id` de esa cancha):**
 
 ```json
 { "precio_hora": 12000 }
@@ -270,11 +274,19 @@ Sin sacar el token de Lucas, se modifica la cancha de tenis (en la URL va el `_i
 
 ### DELETE `/api/canchas/:id` 🔒 admin
 
-Sin sacar el token de Lucas, se elimina la cancha de tenis (en la URL va el `_id` de esa cancha). No lleva body.
+Sin sacar el token de Lucas, **eliminamos la cancha de tenis - (en la URL va el `_id` de esa cancha):**
+
+Esto devolvera un mensaje mostrando que la cancha se elimino correctamente.
+
+```json
+{
+  "mensaje": "La cancha se elimino correctamente"
+}
+```
 
 ### POST `/api/usuarios` 🔒 admin
 
-Todavía con el token de Lucas, se crea a Federico (socio):
+**Todavía con el token de Lucas**, se crea a Federico (socio):
 
 ```json
 {
@@ -290,6 +302,8 @@ Todavía con el token de Lucas, se crea a Federico (socio):
 ---
 
 ### POST `/api/auth/registro` (socios)
+
+**Quitamos el token de Lucas.**
 
 Se registran los dos socios que van a hacer reservas.
 
@@ -316,10 +330,26 @@ Leandro:
   "telefono": "1151617181"
 }
 ```
+### POST `/api/auth/login` (Lucas)
+
+```json
+{
+  "email": "lucas@ejemplo.com",
+  "password": "clave12345"
+}
+```
+
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**. 
+
+### GET `/api/usuarios`
+
+Devuelve un listado con todos los usuarios.
+
+---
 
 ### POST `/api/auth/login` (Federico)
 
-Federico se usa para mostrar cómo se modifica y se da de baja un usuario. Primero iniciá sesión con él:
+Federico se usa para mostrar cómo se modifica y se da de baja un usuario. **Quita el token de Lucas y iniciá sesión con él:**
 
 ```json
 {
@@ -328,11 +358,11 @@ Federico se usa para mostrar cómo se modifica y se da de baja un usuario. Prime
 }
 ```
 
-Copiá el token que devuelve el login y pegalo en Thunder Client, en la pestaña **Auth → Bearer**. Con ese token se hacen los dos pedidos siguientes.
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**. Con ese token se hacen los dos pedidos siguientes.
 
 ### PATCH `/api/usuarios/:id` 🔒 dueño o admin
 
-Sin sacar el token de Federico, se modifica su teléfono (en la URL va el `_id` de Federico):
+Sin sacar el token de Federico, se modifica su teléfono **(en la URL va el `_id` de Federico):**
 
 ```json
 {
@@ -342,13 +372,21 @@ Sin sacar el token de Federico, se modifica su teléfono (en la URL va el `_id` 
 
 ### DELETE `/api/usuarios/:id` 🔒 dueño o admin
 
-Federico se da de baja del sistema (en la URL va el `_id` de Federico). No lleva body.
+Federico se da de baja del sistema **(en la URL va el `_id` de Federico).** 
+
+Esto devolvera un mensaje indicando que el usuario fue eliminado correctamente.
+
+```json
+{
+  "mensaje": "Usuario eliminado correctamente"
+}
+```
 
 ---
 
 ### POST `/api/auth/login` (Marina)
 
-Para crear las reservas, primero iniciá sesión con Marina:
+Para crear las reservas, **quitamos el token de Federico y iniciá sesión con Marina:**
 
 ```json
 {
@@ -357,7 +395,7 @@ Para crear las reservas, primero iniciá sesión con Marina:
 }
 ```
 
-Copiá el token que devuelve el login y pegalo en Thunder Client, en la pestaña **Auth → Bearer**.
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**.
 
 ### POST `/api/reservas` 🔒 (Marina)
 
@@ -373,7 +411,7 @@ Marina, con su token, reserva la cancha de fútbol:
 }
 ```
 
-Respuesta `201`:
+Respuesta `201` - Los _id de este ejemplo son ilustrativos
 
 ```json
 {
@@ -402,7 +440,7 @@ Respuesta `201`:
 
 ### POST `/api/auth/login` (Leandro)
 
-Para la reserva a nombre de Leandro, iniciá sesión con él:
+Para la reserva a nombre de Leandro, **quita el token de Marina y iniciá sesión con él:**
 
 ```json
 {
@@ -411,7 +449,7 @@ Para la reserva a nombre de Leandro, iniciá sesión con él:
 }
 ```
 
-Copiá el token que devuelve el login y pegalo en Thunder Client, en la pestaña **Auth → Bearer**.
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**.
 
 ### POST `/api/reservas` 🔒 (Leandro)
 
@@ -425,7 +463,7 @@ Leandro, con su token, reserva la cancha de básquet:
 }
 ```
 
-Respuesta `201`:
+Respuesta `201` - Los _id de este ejemplo son ilustrativos
 
 ```json
 {
@@ -454,15 +492,32 @@ Respuesta `201`:
 
 ### PATCH `/api/reservas/:id` 🔒 dueño o admin
 
-Sin sacar el token de Leandro, se confirma su reserva (en la URL va el `_id` de esa reserva):
+Sin sacar el token de Leandro, se confirma su reserva **(en la URL va el `_id` de esa reserva):**
 
 ```json
 { "estado": "confirmada" }
 ```
 
+### POST `/api/auth/login` (Lucas)
+
+**Quita el token de Leandro** e inicia sesion con Lucas
+
+```json
+{
+  "email": "lucas@ejemplo.com",
+  "password": "clave12345"
+}
+```
+
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**.
+
+### GET `/api/reservas` (Lucas)
+
+Devuelve un listado con todas las reservas.
+
 ### POST `/api/auth/login` (Marina, de nuevo)
 
-Para eliminar la reserva de Marina hace falta su token, así que se inicia sesión otra vez con ella:
+Para eliminar la reserva de Marina hace falta su token, así que **borra el token que dejo Lucas y inicia sesión otra vez con ella:**
 
 ```json
 {
@@ -470,10 +525,19 @@ Para eliminar la reserva de Marina hace falta su token, así que se inicia sesi�
   "password": "marina123"
 }
 ```
+**Copiá el token que devuelve el login y pegalo en Thunder Client**, en la pestaña **Auth → Bearer**.
 
 ### DELETE `/api/reservas/:id` 🔒 dueño o admin
 
-Con el token de Marina, se elimina su reserva (en la URL va el `_id` de esa reserva). No lleva body.
+Con el token de Marina, se elimina su reserva (en la URL va el `_id` de esa reserva).
+
+Esto devolvera un mensaje indicando que la reserva fue eliminada correctamente.
+
+```json
+{
+  "mensaje": "Reserva eliminada correctamente"
+}
+```
 
 ---
 
